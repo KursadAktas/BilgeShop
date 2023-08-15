@@ -1,0 +1,73 @@
+1 - Projenin Açýlmasý
+------------------------
+
+1 - Hangi katmanlara ihtiyacým olacaðýna karar veriyorum (Data - Business - WebUI)
+2 - Data ve Business için -> Add-Project -> Class Library
+	WebUI için -> Asp.Net Core Empty
+
+3 - Bu katmanlarýn birbirleriyle çalýþabilmeleri için, referans olarak baðlanmalarý lazým.
+
+(Ayný proje içi sayfalarýn birbirlerini tanýmasý -> @using )
+(Farklý projelerin birbirlerini tanýmasý -> Reference )
+
+4 - WebUI'a add ref diyip, Business'ý tanýtýyorum.
+	Business'a add ref diyip, Data'yý tanýtýyorum.
+
+
+2 - ENTITY FRAMEWORK KURUMU
+-----------------------------
+
+Data katmanýna -> Tools + SqlServer
+WebUI katmanýna -> Design
+
+
+3 - VERÝTABANI AYAKLANDIRMASI
+-------------------------------
+
+3 Büyükler -> Context içerisindeki Ctor / Appsettings içerisindeki connectionString / Program.cs içerisindeki AddDbContext metot kullanýmý
+
+Yukarýdaki 3'lüyü doðru doldurduðuma emin oluyorum.
+
+Nuget Console'da yazdýðým migartion ve update komutlarýnýn Data üzerine yazýldýðýna emin oluyorum. (default project : BilgeShop.Data)
+
+Migration oluþturmadan WebUI projemi Startup Project olarak seçmem gerekiyor.
+
+--------------------------------------------------------------------
+
+ViewModel -> View ile Controller arasýnda veriyi taþýyan yapý.
+
+Dto -> Controller(UI katmaný) ile Business Katmaný arasýnda veriyi taþýyan yapý.
+
+Örneðin User kaydý yaparken ViewModel ile aldýðýmýz PasswordConfirm bilgisine o aþamadan sonra ihtiyacýmýz yok. O nedenle o noktadan sonra taþýmaya addUserDto ile devam ediyoruz.
+
+-------------------------------------------------------------------
+
+Find(id) -> Id ile ilgili yapýyý bulur getir.
+
+First(linq) -> Ýlk bulduðu veriyi getirir. Bulamazsa hata fýrlatýr.
+
+FirstOrDefault(linq) -> ilk bulduðu veriyi getirir. Bulamazsa null döner.
+
+Single(linq) -> bulduðu tek veriyi getirir. Bulamazsa veya birden fazla o eþleþen veri varsa hata fýrlatýr.
+
+SingleOrDefault(linq) -> bulduðu tek veriyiy getirir, bulamazsa null getirir. Birden fazla varsa hata fýrlatýr.
+
+---------------------------------------------------------------
+
+REPOSITORY 
+
+Mantýk -> Veritabanýna eriþirken kullandýpým DbContext metotlarýný kendimce, projeme göre biçimlendiriyorum.
+
+örneðin DbContext içerisindeki silme metotlarý HARD DELETE yaparken, bizim Repository metotlarýmýzda HARD DELETE tanýmlamasý yok. Bu projede doðrudan DbContext'e eriþim yapýlmayacaðý ve Ara katman olarak repository kullanýlacaðý için SOFT DELETE yapýlmak zorunda.
+
+---------------------------------------------------------------
+
+AKIÞ
+----
+
+CONTROLLER ILE BAÞLAR
+
+CONTROLLER BUSINESS'TAKI SERVISI KULLANILIR
+
+SERVIS REPOSITORY DB METOTLARINI KULLANIR.
+
